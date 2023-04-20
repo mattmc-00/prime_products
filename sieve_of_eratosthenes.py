@@ -1,7 +1,3 @@
-import csv
-import random
-
-
 def main():
     """
     Sieve of Eratosthenes: Algorithm to compute all primes
@@ -12,13 +8,6 @@ def main():
           "\t\t-----------------------------\n\n")
     inputNum = int(input("Input maximum integer to compute all lesser prime numbers: "))
     primes = findPrimes(inputNum)
-    numProducts = int(input("Input the number of prime products to compute: "))
-    primeProducts = genPrimeProducts(primes, numProducts)
-    print("Writing prime products to output/gen_primes.csv")
-    with open("output/gen_primes.csv", "w", newline='') as csvfile:
-        writer = csv.writer(csvfile)
-        for row in primeProducts:
-            writer.writerow(row)
     print("\nComputed primes: ", primes)
 
 
@@ -38,7 +27,7 @@ def findPrimes(maxVal):
     at which point all primes have been found. 
     """
     # Set of all integers from 2 to input value are candidate primes
-    candidates = set(x for x in range(2, maxVal))
+    candidates = set(x for x in range(3, maxVal))
     # List of primes in specified range is initially empty
     primes = list()
     while len(candidates) > 0:
@@ -49,18 +38,6 @@ def findPrimes(maxVal):
         diff = set(x for x in range(minVal, maxVal, minVal))
         candidates = candidates.difference(diff)
     return(primes[1:])
-
-
-def genPrimeProducts(primes, numProducts):
-    rows = list()
-    for i in range(1, numProducts + 1):
-        # Choose two random primes
-        p1 = random.choice(primes)
-        p2 = random.choice(primes)
-        # Calc the product and add tuple to list
-        row = (p1, p2, p1 * p2)
-        rows.append(row)
-    return(rows)
 
 
 if __name__ == "__main__":
